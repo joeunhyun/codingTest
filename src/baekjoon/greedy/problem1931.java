@@ -1,36 +1,44 @@
 package baekjoon.greedy;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 //회의실 문제
 public class problem1931 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         int N= sc.nextInt();
-        int[] startTime = new int[N];
-        int[] endTime = new int[N];
+        int cnt = 0;
+        int endtime = 0;
+
+        int[][] time = new int[N][2];
 
         for (int i = 0 ; i < N ; i++){
-            startTime[i] = sc.nextInt();
-            endTime[i] = sc.nextInt();
+            time[i][0] = sc.nextInt(); //시작시간
+            time[i][1] = sc.nextInt(); //종료시간
         }
 
-        System.out.println(solution(startTime, endTime, N));
-    }
-
-    public static int solution(int[] startTime , int[] endTime, int N){
-        int result = 1;
-        int start = startTime[0];
-        int end = endTime[0];
-
-        for(int i = 1 ; i < N ; i++){
-                if(end <= startTime[i]){
-                    result++;
-                    start = startTime[i];
-                    end = endTime[i];
+        //끝나는 시간 기준으로 정렬하기
+        Arrays.sort(time, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o1[1]==o2[1]){ //종료시간이 같으면 시작 시간 빠른거 부터
+                    return o1[0] - o2[0];
                 }
-                else continue;
+                return o1[1] - o2[1];
+            }
+        });
+
+        for(int i = 0 ; i < N ; i++){
+            if(endtime <= time[i][0]){
+                endtime = time[i][1];
+                cnt++;
+            }
         }
-        return result;
+
+        System.out.println(cnt);
+
     }
 }
