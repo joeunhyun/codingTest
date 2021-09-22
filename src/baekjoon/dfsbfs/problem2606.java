@@ -24,8 +24,8 @@ public class problem2606 {
             arr[b][a] = 1;
         }
 
-        // 깊이우선탐색
         visited = new boolean[point+1];
+        //너비우선탐색
         System.out.println(bfs(arr, visited, start));
 
 
